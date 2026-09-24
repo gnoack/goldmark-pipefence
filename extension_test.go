@@ -8,12 +8,14 @@ import (
 	"github.com/yuin/goldmark"
 )
 
+func replaceOWithA(input []byte) ([]byte, error) {
+	return bytes.ReplaceAll(input, []byte("o"), []byte("a")), nil
+}
+
 func TestPipefence(t *testing.T) {
 	gmark := goldmark.New(goldmark.WithExtensions(&pipefence.Extension{
 		PipeFuncs: map[string]pipefence.PipeFunc{
-			"banana": func(a []byte) ([]byte, error) {
-				return bytes.ReplaceAll(a, []byte("o"), []byte("a")), nil
-			},
+			"banana": replaceOWithA,
 		},
 	}))
 
